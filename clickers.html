@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Clicker 1.1</title>
+        <style type="text/css">
+        	button {
+        		background-color: green;
+                color: black;
+                padding: 10px;
+                border-radius: 10px;
+                border: 0;
+                cursor: pointer;
+                transition: .5s;
+        	}
+        	button:hover {
+        		background-color: red;
+        	}
+            #main {
+                width: 200px;
+                height: 200px;
+                border-radius: 5px;
+            }
+            #money {
+            	font-size: 25px;
+            }
+            .autoclicker-content {
+            	display: none;
+            }
+            .supplycrate-content {
+            	display: none;
+            }
+            .item {
+            	margin-top: 5px;
+            }
+        </style>
+    </head>
+    <body>
+        <button id="main" onClick="onClick()">CLICK TO EARN CLICKS</button>
+        <div id="text">
+	        <p style="font-size:25px"><strong>Clicks: <span id="clicks">0</span></strong></p>
+	    </div>
+	    <hr>
+	    <div id="details">
+	    	<p style="font-size: 25px"><strong>Details</strong></p>
+	    	<p id="clickers">Clickers: 0</p>
+	    	<p id="supplycrates">Supply Crates: 0</p>
+	    </div>
+	    <hr>
+	    <div id="shop">
+	    	<p style="font-size: 25px"><strong>Store</strong></p>
+	    	<p id="money">$0</p>
+	    	<div class="item">
+		    	<div class="autoclicker-content">
+		    		<button onclick="buyClicker();">Buy Clicker</button><span id="autoclicker-price"></span>
+		    	</div>
+		    </div>
+		    <div class="item">
+		    	<div class="supplycrate-content">
+		    		<button onclick="buySupplyCrate();">Buy Supply Crate</button><span id="supplycrate-price"></span>
+		    	</div>
+		    </div>
+	    </div>
+        <script type="text/javascript">
+        	/* 
+        	CHANGE LOG
+			1.0: Initial release
+			1.1: Fixed bugs after 1.0, tweaked supply crate earning
+        	*/
+
+        	// Configer your settings Drew
+        	var priceForClicker = 10; // It costs 10 clicks for a clicker
+        	var priceForSupplyCrate = 50;
+        	var msForClicker = 3000;
+        	var msForSupplyCrate = 5000;
+        	var earningForClicker = 1;
+        	var earningForSupplyCrate = 6;
+
+        	// Configure the prices
+        	document.getElementById("autoclicker-price").innerHTML=" $"+priceForClicker;
+        	document.getElementById("supplycrate-price").innerHTML=" $"+priceForSupplyCrate;
+
+            var clicks = 0;
+            var crates = 0;
+            var money = 0;
+            var clickers = 0;
+
+            // Give money for clickers
+            setInterval(function() {
+            	for(var i = 0; i < clickers; i++) {
+            		onClickA(earningForClicker);
+            	}
+            	update();
+            }, msForClicker);
+
+            // Give money for supply crates
+            setInterval(function() {
+            	for(var i = 0; i < crates; i++) {
+            		onClickA(earningForSupplyCrate);
+            	}
+            	update();
+            }, msForSupplyCrate);
+
+            function onClick() {
+            	// Add clicks and money
+            	addClicks();
+            	addMoney();
+            }
+            function onClickA(amount) {
+            	clicks+=amount;
+            	money+=amount;
+            	update();
+            }
+            function addClicks() {
+            	clicks++;
+            	update();
+            }
+            function addMoney() {
+            	money++;
+            	update();
+            }
+            function buyClicker() {
+            	// Make sure they aren't trying to hack (doesn't make sense)
+            	if(canAfordClicker()) {
+            		money = money-priceForClicker;
+            		clickers++;
+            		update();
+            	}else{
+            		reset();
+            	}
+            }
+            function buySupplyCrate() {
+            	// Same thing I said up there
+            	if(canAfordSupplyCrate()) {
+            		money = money-priceForSupplyCrate;
+            		crates++;
+            		update();
+            	}else{
+            		reset();
+            	}
+            }
+            function canAfordClicker() {
+            	if(money>=priceForClicker) {
+            		return true;
+            	}else return false;
+            }
+            function canAfordSupplyCrate() {
+            	if(money>=priceForSupplyCrate) {
+            		return true;
+            	}else return false;
+            }
+            function showClicker(show) {
+            	showw(show, "autoclicker-content");
+            }
+            function showSupplyCrate(show) {
+            	showw(show, "supplycrate-content");
+            }
+            function showw(show, id) {
+            	// I couldn't call it "show", and I was just lazy so I called it "showw"./
+            	var objects = document.getElementsByClassName(id);
+        		for(var i = 0; i < objects.length; i++) {
+        			var object = objects[i];
+        			if(show) {
+        				object.style.display="block";
+        			}else{
+        				object.style.display="none";
+        			}
+        		}
+            }
+            function reset() {
+            	// Crappy code but.. whatever?
+            	clicks = 0;
+            	money = 0;
+            	clickers = 0;
+            	crates = 0;
+            	update();
+            	showClicker(false);
+            	showSupplyCrate(false);
+            	console.log("Game reset. Did you cheat?");
+            }
+            function update() {
+            	// Might just... like idk, decrease performance (idk if i spelt that write)
+            	document.getElementById("clicks").innerHTML = clicks;
+            	document.getElementById("money").innerHTML = "$"+money;
+            	document.getElementById("clickers").innerHTML = "Clickers: " + clickers;
+            	document.getElementById("supplycrates").innerHTML = "Supply Crates: " + crates;
+            	if(canAfordClicker()) {
+            		showClicker(true);
+            	}else{
+            		showClicker(false);
+            	}
+            	if(canAfordSupplyCrate()) {
+            		showSupplyCrate(true);
+            	}else{
+            		showSupplyCrate(false);
+            	}
+            }
+        </script>
+    </body>
+</html>
