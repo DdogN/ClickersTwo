@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Clickers</title>
+        <style type="text/css">
+            body {
+                font-family: Verdana, Geneva, Tahoma, sans-serif;
+                background: lightgray;
+            }
+            button {
+                background: green;
+                border: 0;
+                padding: 10px;
+                border-radius: 5px;
+                transition: 0.2s;
+                cursor: pointer;
+            }
+            .shop-item button {
+                background: red;
+            }
+            /*
+            button:hover {
+                background: red;
+            }
+            button:focus {
+                background: #b30000;
+            }
+            */
+            .big {
+                width: 200px;
+                height: 200px;
+                font-size: 30px;
+            }
+            hr {
+                border: 1px solid gray;
+            }
+            #shop div {
+                margin-bottom: 5px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1 id="clicks">0 clicks</h1>
+        <div id="game">
+            <button onclick="addClick(1);" class="big">Click to earn clicks</button>
+            <!--<hr>-->
+            <h2>Shop</h2>
+            <h3 id="money">$0</h3>
+            <div id="shop"></div>
+        </div>
+        <p style="position: absolute; bottom: 1px; margin: 2px;">Coded by <strong>ohobbs72</strong> and designed by <strong>DdogN</strong></p>
+        <script type="text/javascript">
+            var clicks = 0;
+            var money = 0;
+            var shopItems = [];
+            var shopItemsAmount = {}; // saved
+
+            /* ----------------------------------------- */
+            // Triggered by click functions
+
+            function addClick(amount) {
+                // Weird bug, use for loop
+                for(var i = 0; i < amount; i++) {
+                    clicks++;
+                    money++;
+                }
+                update();
+            }
+
+            function shopItemClick(name) {
+                var price = getShopItemArray(name)[1];
+                if(money>=price) {
+                    // Buy item
+                    shopItemsAmount[name]+=1;
+                    removeMoney(price);
+                }else{
+                    // Can't afford
+                    //alert("You can't afford to purchase a " + name + "!");
+                }
+                update();
+            }
+
+            /* ----------------------------------------- */
+            // Constantly updated functions
+
+            function update() {
+                document.getElementById("clicks").innerHTML=clicks+" clicks";
+                document.getElementById("money").innerHTML="$"+money;
+                display();
+                save();
+            }
+
+            function display() {
+                for(var i = 0; i < shopItems.length; i++) {
+                    var name = shopItems[i][0];
+                    var price = shopItems[i][1];
+                    var ms = shopItems[i][2];
+                    var earnings = shopItems[i][3];
+
+                    var e = document.getElementById(name+"-button");
+                    if(money>=price) {
+                        // Display
+                        e.style.background="green";
+                    }else{
+                        // Do not display
+                        e.style.background="red";
+                    }
+                    document.getElementById(name+"-count").innerHTML=shopItemsAmount[name];
+                }
+            }
+
+            /* ----------------------------------------- */
+            // Behind the scences functions
+
+            function registerShopItem(name,price,ms,earnings) {
+                shopItems.push([name, price,ms,earnings]);
+                shopItemsAmount[name] = 0;
+                var display = name.replace("-"," ")
+                document.getElementById("shop").innerHTML+="<div id=\""+name+"\" class=\"shop-item\"><button id=\""+name+"-button\" onclick=\"shopItemClick('"+name+"')\">"+display+"</button><span class=\"shop-item-price\">$"+price+"</span> - <span class=\"shop-item-count\" id=\""+name+"-count\">0</span></div>";
+            }
+
+            function removeMoney(amount) {
+                // Weird bug, use for loop
+                for(var i = 0; i < amount; i++) {
+                    money--;
+                }
+                update();
+            }
+
+            function getShopItemArray(name) {
+                for(var i = 0; i < shopItems.length; i++) {
+                    var temp = shopItems[i][0];
+                    if(temp==name) {
+                        return shopItems[i];
+                    }
+                }
+                return [];
+            }
+
+            function save() {
+                saveData("clicks", clicks);
+                saveData("money", money);
+                saveData("shopItemsAmount", JSON.stringify(shopItemsAmount));
+            }
+            
+            function load() {
+                // name, price, ms, earnings
+                registerShopItem("Clicker",50,1000,1);
+                registerShopItem("Crate",150,1200,5);
+                registerShopItem("Generator",500,500,5);
+                registerShopItem("Super-Generator",5000,750,12);
+                registerShopItem("Faculty",45000,1000,30);
+                registerShopItem("Temple",175000,100,5);
+                registerShopItem("Divison",500000,50,10);
+                registerShopItem("Quantum-Computer",1000000,10,10);
+                registerShopItem("Hacker",5000000,500,5000);
+                registerShopItem("Legand",10000000,1,100);
+
+                clicks = loadData("clicks");
+                if(clicks==null) {
+                    clicks = 0;
+                }
+                
+                money = loadData("money");
+                if(money==null) {
+                    money = 0;
+                }
+
+                shopItemsAmount = JSON.parse(loadData("shopItemsAmount"));
+                if(shopItemsAmount==null) {
+                    shopItemsAmount = {};
+                    for(var i = 0; i < shopItems.length; i++) {
+                        var name = shopItems[i][0];
+                        shopItemsAmount[name] = 0;
+                    }
+                    save();
+                }
+
+                start();
+            }
+
+            function start() {
+                for(var i = 0; i < shopItems.length; i++) {
+                    var name = shopItems[i][0];
+                    var ms = shopItems[i][2];
+                    var earnings = shopItems[i][3];
+                    thread(name,ms,earnings);
+                }
+            }
+
+            function thread(name,ms,earnings) {
+                setInterval(function() {
+                    for(var j = 0; j < shopItemsAmount[name]; j++) {
+                        addClick(earnings);
+                    }
+                }, ms);
+            }
+
+            function cheat() {
+                clicks = 99999;
+                money = 99999;
+                update();
+            }
+
+            function clear() {
+
+            }
+
+            /* ----------------------------------------- */
+            // Simplifying functions
+
+            function saveData(key, data) {
+                localStorage.setItem(key, data);
+            }
+            function loadData(key) {
+                return localStorage.getItem(key);
+            }
+
+            /* ----------------------------------------- */
+            // Load and update data
+
+            load();
+            update();
+        </script>
+    </body>
+</html>
