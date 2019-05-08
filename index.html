@@ -21,65 +21,313 @@
             .shop-item button {
                 background: red;
             }
-            /*
-            button:hover {
-                background: red;
-            }
-            button:focus {
-                background: #b30000;
-            }
-            */
             .big {
                 width: 200px;
                 height: 200px;
                 font-size: 30px;
             }
             hr {
-                border: 1px solid gray;
+                border: 1px solid #C8C8C8;
             }
-            #shop div {
+            #shop div, #black-market div {
                 margin-bottom: 5px;
+            }
+            #black-market {
+                display: none;
+            }
+            #unlock-black-market {
+                margin-top: 20px;
             }
         </style>
     </head>
     <body>
-        <h1 id="clicks">0 clicks</h1>
         <div id="game">
-            <button onclick="idot_i(1);" class="big">Click to earn clicks</button>
+            <h1 id="clicks">0 clicks</h1>
+            <button onclick="addClick(1);" class="big">Click to earn clicks</button>
             <p style="font-size: 20px;"><strong><span id="eps">0</span></strong> clicks per second</p>
-            <!--<hr>-->
             <h2>Shop</h2>
             <h3 id="money">$0</h3>
             <div id="shop"></div>
+            <div id="black-market"><h2>Black Market</h2><p>Be careful, you could get hacked or you could be caught by the cops from purchasing on the black market.</p></div>
+            <div id="unlock-black-market">
+                <h2>Unlock Black Market?</h2>
+                <p>Be careful, when you purchase on the black market you could get hacked or you could be caught by the cops! Don't say I didn't warn you!</p>
+                <button id="unlock-button" onclick="unlockButton();">Unlock Black Market</button> <span id="black-market-price"></span>
+            </div>
         </div>
-	<div id="info">
-		<h1>Change Log</h1>
-		<p>we are working on suggestions from users we thank you!</p>
-		<p><b>1.12</b> Addded the amount of clicks per second, added some more things to the bottom of the screen to add to your enjoyment, went through some versions of the bottom section and fixed some bugs!</p>
-		<h1>Other Versions Of <i>Clickers</i></h1>
-		<a href="https://ddogn.github.io/ClickGame/."><b>0.9</b> The first Clickers! This was part of the beta test of the game and 0.9 was not an amazing version of the game</a>
-		<br>
-		<br>
-		<a href="https://ddogn.github.io/Clickers-1.0/"><b>1.0</b> This is the first released website at this current url and was actually pretty good but needed an update.</a>
-		<br>
-		<br>
-		<a href="clickers.ml"><b>1.1</b> This is the latest and greatest clickers game and has all of the current features!</a>
-<br>
-		<br>
-		<a href=""><b><i>NEW!!!!!</i></b> Clickers 1990's! This is a new game being developed with clickers set in the 1990s, bringing green text and floppy discs this game will launch by early june 2019!</a>
-		
-		<br>
-		<br>
-		<button onclick="yeeter();">Clear ALL data in game on this device(restart)</button>
-		<p style="margin: 2px;">Game programmed by <strong>Owen Hobbs</strong> and designed by <strong>Drew Novak</strong></p>
-	</div>
+        <hr>
+        <div id="info">
+            <div id="change-log">
+                <h1>Clickers Change Log</h1>
+                <ul>
+                    <li><strong>1.3</strong> Introduced the black market, 5% caught, 20% hacked</li>
+                    <li><strong>1.2</strong> Improved incrementing system and added "clicks per second" calculator</li>
+                    <li><strong>1.1</strong> Improved release of clickers featuring 10 shop items instead of 2</li>
+                    <li><a href="https://ddogn.github.io/Clickers-1.0/"><strong>1.0</strong></a> This was the first offical version of clickers, not featuring much</li>
+                </ul>
+            </div>
+            <div id="future-games">
+                <h1>Future Games</h1>
+                <ul>
+                    <li><strong>Clickers 1990's</strong> This is a game being developed with clickers set in the 1990s, bringing green text and floppy discs. This game will launch by early June 2019!</li>
+                    <li><strong>HobberRoyal</strong> This game will be a online multiplayer web based game featuring weapons and much more! This game will launch early July 2019!</li>
+                </ul>
+            </div>
+            <div style="margin-bottom: 5px;">
+                <button onclick="yeeter();">Reset Game</button>
+            </div>
+            <div>
+                <p style="margin: 2px;">Game programmed by <strong>Owen Hobbs</strong> and designed by <strong>Drew Novak</strong></p>
+            </div>
+        </div>
         <script type="text/javascript">
-            var idot_c=0x64;var idot_d=0x0;var idot_e=0x0;var idot_f=0x0;var idot_g=[];var idot_h={};function idot_i(j){idot_e=parseFloat(parseFloat(idot_e)+parseFloat(j));idot_f=parseFloat(parseFloat(idot_f)+parseFloat(j));idot_n();}function idot_k(l){var m=idot_E(l)[0x1];if(idot_f>=m){idot_h[l]+=0x1;idot_B(m);}idot_n();}function idot_n(){document['getElementById']('clicks')['innerHTML']=parseInt(idot_e)+'\x20clicks';document['getElementById']('money')['innerHTML']='$'+parseInt(idot_f);idot_o();idot_I();}function idot_o(){for(var p=0x0;p<idot_g['length'];p++){var q=idot_g[p][0x0];var r=idot_g[p][0x1];var s=idot_g[p][0x2];var t=idot_g[p][0x3];var u=document['getElementById'](q+'-button');if(idot_f>=r){u['style']['background']='green';}else{u['style']['background']='red';}document['getElementById'](q+'-count')['innerHTML']=idot_h[q];}}function idot_v(w,x,y,z){idot_g['push']([w,x,y,z]);idot_h[w]=0x0;var idot_o=w['replace']('-','\x20');document['getElementById']('shop')['innerHTML']+='<div\x20id=\x22'+w+'\x22\x20class=\x22shop-item\x22><button\x20id=\x22'+w+'-button\x22\x20onclick=\x22idot_k(\x27'+w+'\x27)\x22>'+idot_o+'</button><span\x20class=\x22shop-item-price\x22>$'+x+'</span>\x20-\x20<span\x20class=\x22shop-item-count\x22\x20id=\x22'+w+'-count\x22>0</span></div>';}function idot_B(C){for(var D=0x0;D<C;D++){idot_f--;}idot_n();}function idot_E(F){for(var G=0x0;G<idot_g['length'];G++){var H=idot_g[G][0x0];if(H==F){return idot_g[G];}}return[];}function idot_I(){idot_a2('clicks',idot_e);idot_a2('money',idot_f);idot_a2('shopItemsAmount',JSON['stringify'](idot_h));}function idot_J(){idot_v('Clicker',0x32,0x3e8,0x1);idot_v('Crate',0x96,0x4b0,0x5);idot_v('Generator',0x1f4,0x1f4,0x5);idot_v('Super-Generator',0x1388,0x2ee,0xc);idot_v('Faculty',0xafc8,0x3e8,0x1e);idot_v('Temple',0x2ab98,0x64,0x5);idot_v('Divison',0x7a120,0x32,0xa);idot_v('Quantum-Computer',0xf4240,0xa,0xa);idot_v('Hacker',0x4c4b40,0x1f4,0x1388);idot_v('Legand',0x989680,0x1,0x64);idot_e=idot_a5('clicks');if(idot_e==null){idot_e=0x0;}idot_f=idot_a5('money');if(idot_f==null){idot_f=0x0;}idot_h=JSON['parse'](idot_a5('shopItemsAmount'));if(idot_h==null){idot_h={};for(var K=0x0;K<idot_g['length'];K++){var L=idot_g[K][0x0];idot_h[L]=0x0;}idot_I();}idot_M();}function idot_M(){var N=[];var O={};for(var P=0x0;P<idot_g['length'];P++){var Q=idot_g[P][0x0];N['push'](Q);var R=idot_g[P][0x3];var S=idot_g[P][0x2];var T=idot_Y(R,S);O[Q]=T;}setInterval(function(){for(var U=0x0;U<N['length'];U++){var Q=N[U];for(var P=0x0;P<idot_h[Q];P++){var T=O[Q];idot_i(T);idot_d+=T;}}idot_d=idot_d*0xa;document['getElementById']('eps')['innerHTML']=parseInt(idot_d);idot_d=0x0;},idot_c);}function idot_Y(Z,a0){eps=Z*idot_c/a0;return eps;}var idoter=![];function idot_a2(a3,a4){if(!idoter)localStorage['setItem'](a3,a4);}function idot_a5(a6){return localStorage['getItem'](a6);}idot_J();idot_n();
+            var increment = 100;
+            var globalEps = 0;
+
+            var clicks = 0;
+            var money = 0;
+
+            var blackMarketPrice = 5000000;
+            document.getElementById("black-market-price").innerHTML="$"+blackMarketPrice;
+            var blackMarketUnlocked = false;
+            function unlockButton() {
+                if (money>=blackMarketPrice) {
+                    removeMoney(blackMarketPrice);
+                    unlock();
+                }
+            }
+            function unlock() {
+                document.getElementById("black-market").style.display="block";
+                document.getElementById("unlock-black-market").style.display="none";
+                blackMarketUnlocked = true;
+                update();
+            }
+
+            var shopItems = [];
+            var shopItemsAmount = {}; // saved
+            /* ----------------------------------------- */
+            // Triggered by click functions
+            function addClick(amount) {
+                clicks = parseFloat(parseFloat(clicks) + parseFloat(amount));
+                money = parseFloat(parseFloat(money) + parseFloat(amount));
+                update();
+            }
+            function shopItemClick(name) {
+                var price = getShopItemArray(name)[1];
+                if(money>=price) {
+                    // Buy item
+                    removeMoney(price);
+                    // Check if black market item
+                    var item = getShopItemArray(name);
+                    var shop = item[4];
+                    if(shop=="black-market") {
+                        // Take a risk
+                        if(risk()){
+                            shopItemsAmount[name]+=1;
+                        }
+                    }else{
+                        shopItemsAmount[name]+=1;
+                    }
+                }
+                update();
+            }
+            function risk() {
+                var max = 100;
+                var random = Math.floor(Math.random() * Math.floor(max));
+                if(random>=80) {
+                    // Caught
+                    update();
+                    alert("You have been hacked and your purchase has been stolen!");
+                    return false;
+                }
+                if(random<=5) {
+                    // Hacked
+
+                    // Prevent closing window from alert
+                    update();
+                    idoter = true;
+                    localStorage.clear();
+
+                    alert("You have been caught by the cops!");
+                    yeeter();
+
+                    return false;
+                }
+                return true;
+            }
+            /* ----------------------------------------- */
+            // Constantly updated functions
+            function update() {
+                document.getElementById("clicks").innerHTML=parseInt(clicks)+" clicks";
+                document.getElementById("money").innerHTML="$"+parseInt(money);
+                display();
+                save();
+            }
+            function display() {
+                for(var i = 0; i < shopItems.length; i++) {
+                    var name = shopItems[i][0];
+                    var price = shopItems[i][1];
+                    var ms = shopItems[i][2];
+                    var earnings = shopItems[i][3];
+                    var e = document.getElementById(name+"-button");
+                    if(money>=price) {
+                        // Display
+                        e.style.background="green";
+                    }else{
+                        // Do not display
+                        e.style.background="red";
+                    }
+                    document.getElementById(name+"-count").innerHTML=shopItemsAmount[name];
+                }
+                var button = document.getElementById("unlock-button");
+                if(money>=blackMarketPrice) {
+                    // Display
+                    button.style.background="green";
+                }else{
+                    // Do not display
+                    button.style.background="red";
+                }
+            }
+            /* ----------------------------------------- */
+            // Behind the scences functions
+            function registerShopItem(name,price,ms,earnings, market) {
+                shopItems.push([name, price,ms,earnings,market]);
+                shopItemsAmount[name] = 0;
+                var display = name.replace("-"," ");
+                display = display.replace("-"," ");
+
+                var html = "<div id=\""+name+"\" class=\"shop-item\"><button id=\""+name+"-button\" onclick=\"shopItemClick('"+name+"')\">"+display+"</button><span class=\"shop-item-price\">$"+price+"</span> - <span class=\"shop-item-count\" id=\""+name+"-count\">0</span></div>";
+
+                switch(market) {
+                    case "shop":
+                        document.getElementById("shop").innerHTML+=html;
+                        break;
+                    case "black-market":
+                        document.getElementById("black-market").innerHTML+=html;
+                        break;
+                    default:
+                        document.getElementById("shop").innerHTML+=html;
+                        break;
+                }
+                
+            }
+            function removeMoney(amount) {
+                // Weird bug, use for loop
+                for(var i = 0; i < amount; i++) {
+                    money--;
+                }
+                update();
+            }
+            function getShopItemArray(name) {
+                for(var i = 0; i < shopItems.length; i++) {
+                    var temp = shopItems[i][0];
+                    if(temp==name) {
+                        return shopItems[i];
+                    }
+                }
+                return [];
+            }
+            function save() {
+                saveData("clicks", clicks);
+                saveData("money", money);
+                saveData("shopItemsAmount", JSON.stringify(shopItemsAmount));
+                saveData("blackMarketUnlocked", blackMarketUnlocked);
+            }
+            
+            function load() {
+                // name, price, ms, earnings, shop
+                registerShopItem("Clicker",50,1000,1,"shop");
+                registerShopItem("Crate",150,1200,5,"shop");
+                registerShopItem("Generator",500,500,5,"shop");
+                registerShopItem("Super-Generator",5000,250,15,"shop");
+                registerShopItem("Faculty",45000,500,40,"shop");
+                registerShopItem("Temple",135000,100,15,"shop");
+                registerShopItem("Divison",405000,50,15,"shop");
+
+                registerShopItem("Super-Computer",1000000,10,10,"black-market");
+                registerShopItem("Quantum-Computer",5000000,10,100,"black-market");
+                registerShopItem("Gray-Hat-Hacker",10000000,5,1000,"black-market");
+                registerShopItem("Black-Hat-Hacker",75000000,1,5000,"black-market");
+                registerShopItem("Legand-Hacker",100000000,1,100000,"black-market");
+                
+                clicks = loadData("clicks");
+                if(clicks==null) {
+                    clicks = 0;
+                }
+                
+                money = loadData("money");
+                if(money==null) {
+                    money = 0;
+                }
+                shopItemsAmount = JSON.parse(loadData("shopItemsAmount"));
+                if(shopItemsAmount==null) {
+                    shopItemsAmount = {};
+                    for(var i = 0; i < shopItems.length; i++) {
+                        var name = shopItems[i][0];
+                        shopItemsAmount[name] = 0;
+                    }
+                    save();
+                }
+
+                blackMarketUnlocked = (loadData("blackMarketUnlocked")=='true');
+                if(blackMarketUnlocked) {
+                    unlock();
+                }
+
+                start();
+            }
+            function start() {
+                var names = [];
+                var cache = {};
+                for(var i = 0; i < shopItems.length; i++) {
+                    var name = shopItems[i][0];
+                    names.push(name);
+                    var earnings = shopItems[i][3];
+                    var ms = shopItems[i][2];
+                    var eps = getEPS(earnings, ms);
+                    //console.log(name +": " + eps);
+                    cache[name] = eps;
+                }
+                setInterval(function() {
+                    for(var j = 0; j < names.length; j++) {
+                        var name = names[j];
+                        for(var i = 0; i < shopItemsAmount[name]; i++) {
+                            var eps = cache[name];
+                            addClick(eps);
+                            globalEps += eps;
+                        }
+                    }
+                    globalEps = globalEps*10;
+                    document.getElementById("eps").innerHTML = parseInt(globalEps);
+                    globalEps = 0;
+                }, increment);
+            }
+            function getEPS(earnings, ms) {
+                // earnings * 1000 / ms = earnings per second
+                eps = earnings * increment / ms;
+                return eps;
+            }
+            /* ----------------------------------------- */
+            // Simplifying functions
+            var idoter = false;
+            function saveData(key, data) {
+                if(!idoter)
+                    localStorage.setItem(key, data);
+            }
+            function loadData(key) {
+                return localStorage.getItem(key);
+            }
+
+            /* ----------------------------------------- */
+            // Load and update data
+            load();
+            update();
+
             function yeeter() {
-		idoter = true;
-		localStorage.clear();
-		location.reload();
-	    }
-	</script>
+                idoter = true;
+                localStorage.clear();
+                location.reload();
+            }
+	    </script>
     </body>
 </html>
