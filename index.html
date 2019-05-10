@@ -170,7 +170,7 @@
                 update();
             }
             function onlineAccess() {
-                socket = io('http://hobbercode.mynetgear.com:2000');
+                socket = io('https://quantum.hobbercode.com:2000');
                 socket.emit('username', escape(onlineAccessUsername));
                 socket.on('newUsername', function(pack) {
                     document.getElementById('online-access-users').innerHTML='';
