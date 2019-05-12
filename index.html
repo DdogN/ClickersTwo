@@ -170,7 +170,7 @@
                 update();
             }
             function onlineAccess() {
-                socket = io('');
+                socket = io('https://quantum.hobbercode.com:2053');
                 socket.emit('username', escape(onlineAccessUsername));
                 socket.on('newUsername', function(pack) {
                     document.getElementById('online-access-users').innerHTML='';
