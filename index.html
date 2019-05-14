@@ -225,13 +225,13 @@
             function risk() {
                 var max = 100;
                 var random = Math.floor(Math.random() * Math.floor(max));
-                if(random>=80) {
+                if(random>=85) {
                     // Caught
                     update();
                     alert("You have been hacked and your purchase has been stolen!");
                     return false;
                 }
-                if(random<=5) { 
+                if(random<=3) { 
                     update();
                     idoter = true;
                     localStorage.clear();
@@ -325,13 +325,13 @@
                 registerShopItem("Super-Generator",5000,250,15,"shop");
                 registerShopItem("Faculty",45000,500,60,"shop");
                 registerShopItem("Temple",135000,100,35,"shop");
-                registerShopItem("Divison",405000,50,35,"shop");
+                registerShopItem("Divison",405000,50,350,"shop");
 
                 registerShopItem("Super-Computer",1000000,10,10,"black-market");
                 registerShopItem("Quantum-Computer",5000000,10,100,"black-market");
                 registerShopItem("Gray-Hat-Hacker",10000000,5,1000,"black-market");
-                registerShopItem("Black-Hat-Hacker",75000000,1,5000,"black-market");
-                registerShopItem("Legand-Hacker",100000000,1,100000,"black-market");
+                registerShopItem("Black-Hat-Hacker",75000000,1,50000,"black-market");
+                registerShopItem("Legand-Hacker",100000000,1,1000000,"black-market");
                 
                 clicks = loadData("clicks");
                 if(clicks==null) {
